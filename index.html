@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>EVA Flowtime Timer - Power Disconnection Bar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <audio id="internalbat-sound" src="start.mp3" preload="auto"></audio>
+  <div id="warning-box" class="warning hidden">⚠ POWER CABLE DISCONNECTED</div>
+
+  <div class="panel">
+    <div class="container">
+      <div id="timer">00:00:00</div>
+
+      <div class="power-status-container">
+        <div id="internal-power" class="power-box">INTERNAL POWER</div>
+        <div id="external-power" class="power-box">EXTERNAL POWER</div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button id="start" class="action-button">START MISSION</button>
+      <button id="stop" class="action-button" disabled>ABORT MISSION</button>
+      <button id="reset" class="action-button">RESET</button>
+      <button id="reset-streak" class="action-button">RESET STREAK</button>
+    </div>
+
+    <div class="log-area">
+      <div id="streak">Streak: 0 🟢⚪⚪⚪⚪</div>
+      <div id="log">No sessions yet.</div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
