@@ -1,120 +1,161 @@
-let startTime, timerInterval, isBreak = false, focusDuration = 0;
-let streak = parseInt(localStorage.getItem("streak")) || 0;
-
-const timerEl = document.getElementById("timer");
-const startBtn = document.getElementById("start");
-const stopBtn = document.getElementById("stop");
-const resetBtn = document.getElementById("reset");
-const resetStreakBtn = document.getElementById("reset-streak");
-const logEl = document.getElementById("log");
-const streakEl = document.getElementById("streak");
-const internalPowerEl = document.getElementById("internal-power");
-const externalPowerEl = document.getElementById("external-power");
-const warningBox = document.getElementById("warning-box");
-const intbatsound = document.getElementById("internalbat-sound");
-
-function formatTime(ms) {
-  const totalSec = Math.floor(ms / 1000);
-  const hrs = String(Math.floor(totalSec / 3600)).padStart(2, '0');
-  const min = String(Math.floor((totalSec % 3600) / 60)).padStart(2, '0');
-  const sec = String(totalSec % 60).padStart(2, '0');
-  return `${hrs}:${min}:${sec}`;
+* {
+  box-sizing: border-box;
 }
 
-function updateTimer() {
-  const elapsed = Date.now() - startTime;
-  timerEl.textContent = formatTime(elapsed);
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Share Tech Mono', monospace;
+  background: linear-gradient(to bottom, #220000, #443300, #002200);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ff2a2a;
 }
 
-function startTimer() {
-  isBreak = false;
-  startTime = Date.now();
-  timerInterval = setInterval(updateTimer, 500);
-  startBtn.disabled = true;
-  stopBtn.disabled = false;
-  setPowerState("internal-only");
-  intbatsound.play();
-  warningBox.classList.remove("hidden");
-  setTimeout(() => warningBox.classList.add("hidden"), 3000);
+.panel {
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 0 30px #ff000044;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  background-color: #140000;
+  max-width: 900px;
+  width: 90vw;
+  position: relative;
+  z-index: 1;
 }
 
-function stopTimer() {
-  clearInterval(timerInterval);
-  const elapsed = Date.now() - startTime;
-  focusDuration = elapsed;
-  const breakDuration = Math.floor(focusDuration / 5);
-  logSession(focusDuration, breakDuration);
-  startBreak(breakDuration);
+.container {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: nowrap;
+  justify-content: center;
+  width: 100%;
 }
 
-function startBreak(duration) {
-  isBreak = true;
-  let remaining = duration;
-  startTime = Date.now();
-  timerInterval = setInterval(() => {
-    const elapsed = Date.now() - startTime;
-    if (elapsed >= remaining) {
-      clearInterval(timerInterval);
-      streak++;
-      localStorage.setItem("streak", streak);
-      updateStreakDisplay();
-      startBtn.disabled = false;
-      stopBtn.disabled = true;
-      timerEl.textContent = "00:00:00";
-      setPowerState("both");
-    } else {
-      timerEl.textContent = formatTime(remaining - elapsed);
-    }
-  }, 500);
-
-  startBtn.disabled = true;
-  stopBtn.disabled = true;
-  setPowerState("internal-only");
+#timer {
+  font-family: 'Orbitron', monospace;
+  font-size: 6rem;
+  color: #ffb84d;
+  text-shadow: 0 0 20px #ffb84d, 0 0 40px #ffb84d;
+  user-select: none;
+  text-align: center;
+  flex: 1 1 auto;
 }
 
-function resetTimer() {
-  clearInterval(timerInterval);
-  timerEl.textContent = "00:00:00";
-  startBtn.disabled = false;
-  stopBtn.disabled = true;
-  setPowerState("both");
+.power-status-container {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  width: 220px;
+  user-select: none;
 }
 
-function logSession(focusMs, breakMs) {
-  const log = `• Session: ${formatTime(focusMs)} → Break: ${formatTime(breakMs)}`;
-  const prev = logEl.innerHTML;
-  logEl.innerHTML = `${log}\n${prev}`;
+.power-box {
+  background: #2a0000;
+  border: 2px solid #ff0000;
+  box-shadow: 0 0 15px #ff000055;
+  padding: 25px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.1rem;
+  letter-spacing: 1.2px;
+  color: inherit;
+  border-radius: 8px;
+  transition: box-shadow 0.3s;
+  text-align: center;
 }
 
-function updateStreakDisplay() {
-  let icons = '';
-  for (let i = 0; i < 5; i++) {
-    icons += i < streak % 5 ? '🟢' : '⚪';
-  }
-  streakEl.textContent = `Streak: ${streak} ${icons}`;
+.power-box:hover {
+  box-shadow: 0 0 20px #ff0000cc, 0 0 40px #ff0000aa;
 }
 
-function resetStreak() {
-  streak = 0;
-  localStorage.removeItem("streak");
-  updateStreakDisplay();
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin-top: 20px;
+  flex-wrap: nowrap;
+  width: 100%;
 }
 
-function setPowerState(state) {
-  if (state === "both") {
-    internalPowerEl.classList.remove("blink");
-    externalPowerEl.style.display = "block";
-  } else if (state === "internal-only") {
-    internalPowerEl.classList.add("blink");
-    externalPowerEl.style.display = "none";
-  }
+.action-button {
+  background: #2a0000;
+  border: 2px solid #ff0000;
+  box-shadow: 0 0 15px #ff000055;
+  padding: 15px 25px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #ff0000;
+  cursor: pointer;
+  border-radius: 8px;
+  user-select: none;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  flex: 1 1 auto;
+  text-align: center;
+  text-shadow: 0 0 4px red;
+  min-width: 110px;
 }
 
-startBtn.addEventListener("click", startTimer);
-stopBtn.addEventListener("click", stopTimer);
-resetBtn.addEventListener("click", resetTimer);
-resetStreakBtn.addEventListener("click", resetStreak);
+.action-button:hover:not(:disabled) {
+  background-color: #550000;
+  box-shadow: 0 0 25px #ff0000cc, 0 0 50px #ff0000aa;
+  color: #fff;
+}
 
-updateStreakDisplay();
-setPowerState("both");
+.action-button:disabled {
+  color: #440000;
+  border-color: #440000;
+  cursor: not-allowed;
+  background-color: #220000;
+  box-shadow: none;
+}
+
+.log-area {
+  font-size: 0.9rem;
+  color: #ff7272;
+  font-family: monospace;
+  max-width: 600px;
+  white-space: pre-line;
+  text-align: left;
+  margin-top: 10px;
+  width: 100%;
+}
+
+#streak {
+  margin-bottom: 8px;
+}
+
+.warning {
+  position: absolute;
+  top: 30%;
+  left: 0;
+  right: 0;
+  font-size: 1.2rem;
+  background-color: #220000;
+  color: #ff0000;
+  border-top: 3px solid #ff0000;
+  border-bottom: 3px solid #ff0000;
+  padding: 20px;
+  text-align: center;
+  text-shadow: 0 0 5px #ff0000;
+  box-shadow: 0 0 18px #ff0000cc;
+  z-index: 1000;
+  animation: flicker 0.4s infinite alternate;
+}
+
+.hidden {
+  display: none;
+}
+
+@keyframes flicker {
+  0% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
 
