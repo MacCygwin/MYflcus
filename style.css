@@ -43,17 +43,18 @@ html, body {
 }
 
 #timer {
-  background-color: #000000;    /* solid black background */
-  padding: 30px 60px;           /* more padding for bigger box */
-  border-radius: 12px;          /* rounded corners */
-  box-shadow: 0 0 20px #ffcc0099; /* subtle yellow glow */
-  font-size: 5rem;              /* bigger font */
-  color: #ffcc00;               /* orangey yellow */
-  font-family: 'Share Tech Mono', monospace; /* keep your monospace */
+  background-color: #000000;      /* solid black background */
+  padding: 30px 60px;             /* more padding for bigger box */
+  border-radius: 12px;            /* rounded corners */
+  box-shadow: 0 0 20px #ff000099; /* red glow around the box */
+  font-size: 5rem;                /* bigger font */
+  color: #ffcc00;                 /* orangey yellow font color */
+  font-family: 'Share Tech Mono', monospace;
   user-select: none;
-  display: inline-block;        /* shrink to fit content */
+  display: inline-block;
   text-align: center;
 }
+
 
 .power-status-container {
   display: flex;
