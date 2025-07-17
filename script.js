@@ -44,22 +44,15 @@ function stopTimer() {
   focusDuration = elapsed;
   const breakDuration = Math.floor(focusDuration / 5);
   logSession(focusDuration, breakDuration);
-
-  // Show external power green on abort
-  showExternalPowerGreen();
-
   startBreak(breakDuration);
+  // Show external power green when abort clicked
+  setPowerState("external-green");
 }
 
 function startBreak(duration) {
   isBreak = true;
   let remaining = duration;
   startTime = Date.now();
-
-  // On break start, internal power blinking and external power green visible
-  internalPowerEl.classList.add("blink");
-  showExternalPowerGreen();
-
   timerInterval = setInterval(() => {
     const elapsed = Date.now() - startTime;
     if (elapsed >= remaining) {
@@ -70,10 +63,7 @@ function startBreak(duration) {
       startBtn.disabled = false;
       stopBtn.disabled = true;
       timerEl.textContent = "00:00:00";
-
-      // After break ends: external power box stays visible but turns red
-      internalPowerEl.classList.remove("blink");
-      showExternalPowerRed();
+      setPowerState("external-red");  // external red at break end
     } else {
       timerEl.textContent = formatTime(remaining - elapsed);
     }
@@ -81,6 +71,7 @@ function startBreak(duration) {
 
   startBtn.disabled = true;
   stopBtn.disabled = true;
+  setPowerState("internal-only");
 }
 
 function resetTimer() {
@@ -88,8 +79,7 @@ function resetTimer() {
   timerEl.textContent = "00:00:00";
   startBtn.disabled = false;
   stopBtn.disabled = true;
-  setPowerState("both");
-  showExternalPowerGreen();
+  setPowerState("external-red"); // reset shows external red
 }
 
 function logSession(focusMs, breakMs) {
@@ -112,34 +102,34 @@ function resetStreak() {
   updateStreakDisplay();
 }
 
-function showExternalPowerGreen() {
-  externalPowerEl.style.display = "block";
-  externalPowerEl.style.color = "#00ff00";
-  externalPowerEl.style.borderColor = "#00ff00";
-  externalPowerEl.style.boxShadow = "0 0 15px #00ff0044";
-}
-
-function showExternalPowerRed() {
-  externalPowerEl.style.display = "block";
-  externalPowerEl.style.color = "#ff0000";
-  externalPowerEl.style.borderColor = "#ff0000";
-  externalPowerEl.style.boxShadow = "0 0 15px #ff000044";
-}
-
 function setPowerState(state) {
   if (state === "both") {
     internalPowerEl.classList.remove("blink");
-    showExternalPowerGreen();
+    internalPowerEl.style.color = "#ff0000"; // red text internal power
+    externalPowerEl.style.display = "block";
+    externalPowerEl.style.color = "#00ff00"; // green text external power
   } else if (state === "internal-only") {
     internalPowerEl.classList.add("blink");
+    internalPowerEl.style.color = "#ff0000";
     externalPowerEl.style.display = "none";
+  } else if (state === "external-red") {
+    internalPowerEl.classList.remove("blink");
+    internalPowerEl.style.color = "#ff0000";
+    externalPowerEl.style.display = "block";
+    externalPowerEl.style.color = "#ff0000"; // red text external power
+  } else if (state === "external-green") {
+    internalPowerEl.classList.remove("blink");
+    internalPowerEl.style.color = "#ff0000";
+    externalPowerEl.style.display = "block";
+    externalPowerEl.style.color = "#00ff00"; // green text external power
   }
 }
+
+// Initial setup on page load
+updateStreakDisplay();
+setPowerState("external-red");
 
 startBtn.addEventListener("click", startTimer);
 stopBtn.addEventListener("click", stopTimer);
 resetBtn.addEventListener("click", resetTimer);
 resetStreakBtn.addEventListener("click", resetStreak);
-
-updateStreakDisplay();
-setPowerState("both");
