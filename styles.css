@@ -1,161 +1,78 @@
-* {
-  box-sizing: border-box;
-}
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
-html, body {
-  height: 100%;
+body {
   margin: 0;
+  padding: 0;
   font-family: 'Share Tech Mono', monospace;
   background: linear-gradient(to right, #aa0000, #d4af37, #228b22);
+  background-size: 300% 100%;
+  animation: gradientShift 60s linear infinite;
+  color: #f5f5f5;
+  height: 100vh;
   display: flex;
+  align-items: center;
   justify-content: center;
-  align-items: center;
-  color: #ff2a2a;
-}
-
-.panel {
-  padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 0 30px #ff000044;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 30px;
-  background-color: #140000;
-  max-width: 900px;
-  width: 90vw;
-  position: relative;
-  z-index: 1;
 }
 
 .container {
-  display: flex;
-  align-items: center;
-  gap: 30px;
-  flex-wrap: nowrap;
-  justify-content: center;
-  width: 100%;
-}
-
-#timer {
-  font-family: 'Orbitron', monospace;
-  font-size: 6rem;
-  color: #ffb84d;
-  text-shadow: 0 0 20px #ffb84d, 0 0 40px #ffb84d;
-  user-select: none;
-  text-align: center;
-  flex: 1 1 auto;
-}
-
-.power-status-container {
+  background-color: #000;
+  padding: 40px;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
-  gap: 25px;
-  width: 220px;
-  user-select: none;
-}
-
-.power-box {
-  background: #2a0000;
-  border: 2px solid #ff0000;
-  box-shadow: 0 0 15px #ff000055;
-  padding: 25px 20px;
-  display: flex;
-  justify-content: center;
+  gap: 30px;
   align-items: center;
-  font-weight: bold;
-  font-size: 1.1rem;
-  letter-spacing: 1.2px;
-  color: inherit;
-  border-radius: 8px;
-  transition: box-shadow 0.3s;
-  text-align: center;
+  box-shadow: 0 0 20px #111;
+  max-width: 90vw;
 }
 
-.power-box:hover {
-  box-shadow: 0 0 20px #ff0000cc, 0 0 40px #ff0000aa;
+.timer {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 6rem;
+  color: #f4d942; /* orangey-yellow */
+  text-shadow: 0 0 10px #f4d94288;
 }
 
-.actions {
+.status-container,
+.actions-container {
   display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
   justify-content: center;
-  gap: 25px;
-  margin-top: 20px;
-  flex-wrap: nowrap;
-  width: 100%;
 }
 
+.status-box,
 .action-button {
-  background: #2a0000;
-  border: 2px solid #ff0000;
-  box-shadow: 0 0 15px #ff000055;
+  background-color: #111;
+  color: #f5f5f5;
   padding: 15px 25px;
-  font-size: 1rem;
-  font-weight: bold;
-  color: #ff0000;
-  cursor: pointer;
+  border: 2px solid #555;
   border-radius: 8px;
-  user-select: none;
-  transition: background-color 0.3s, box-shadow 0.3s;
-  flex: 1 1 auto;
+  font-size: 1rem;
   text-align: center;
-  text-shadow: 0 0 4px red;
-  min-width: 110px;
+  box-shadow: 0 0 10px #222;
+  min-width: 120px;
 }
 
-.action-button:hover:not(:disabled) {
-  background-color: #550000;
-  box-shadow: 0 0 25px #ff0000cc, 0 0 50px #ff0000aa;
-  color: #fff;
-}
-
-.action-button:disabled {
-  color: #440000;
-  border-color: #440000;
-  cursor: not-allowed;
-  background-color: #220000;
-  box-shadow: none;
-}
-
-.log-area {
-  font-size: 0.9rem;
-  color: #ff7272;
-  font-family: monospace;
-  max-width: 600px;
-  white-space: pre-line;
-  text-align: left;
-  margin-top: 10px;
-  width: 100%;
-}
-
-#streak {
-  margin-bottom: 8px;
-}
-
-.warning {
-  position: absolute;
-  top: 30%;
-  left: 0;
-  right: 0;
-  font-size: 1.2rem;
-  background-color: #220000;
-  color: #ff0000;
-  border-top: 3px solid #ff0000;
-  border-bottom: 3px solid #ff0000;
-  padding: 20px;
-  text-align: center;
-  text-shadow: 0 0 5px #ff0000;
-  box-shadow: 0 0 18px #ff0000cc;
-  z-index: 1000;
-  animation: flicker 0.4s infinite alternate;
-}
-
-.hidden {
+.status-box.hidden {
   display: none;
 }
 
-@keyframes flicker {
-  0% { opacity: 1; }
-  100% { opacity: 0.6; }
+.action-button {
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
+.action-button:hover {
+  background-color: #222;
+  border-color: #777;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
