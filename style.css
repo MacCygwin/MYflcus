@@ -100,7 +100,7 @@ html, body {
 .actions {
   display: flex;
   justify-content: center;
-  gap: 25px;
+  gap: 10px;       /* reduced gap */
   margin-top: 20px;
   flex-wrap: nowrap;
   width: 100%;
@@ -110,7 +110,7 @@ html, body {
   background: #2a0000;
   border: 2px solid #ff0000;
   box-shadow: 0 0 15px #ff000055;
-  padding: 15px 25px;
+  padding: 12px 15px;   /* slightly smaller padding */
   font-size: 1rem;
   font-weight: bold;
   color: #ff0000;
@@ -118,10 +118,10 @@ html, body {
   border-radius: 8px;
   user-select: none;
   transition: background-color 0.3s, box-shadow 0.3s;
-  flex: 1 1 auto;
+  flex: 0 1 auto;      /* allow shrinking */
   text-align: center;
   text-shadow: 0 0 4px red;
-  min-width: 110px;
+  min-width: 80px;     /* reduced min width */
 }
 
 .action-button:hover:not(:disabled) {
@@ -137,6 +137,7 @@ html, body {
   background-color: #220000;
   box-shadow: none;
 }
+
 
 .log-area {
   font-size: 0.9rem;
