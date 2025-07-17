@@ -44,6 +44,10 @@ function stopTimer() {
   focusDuration = elapsed;
   const breakDuration = Math.floor(focusDuration / 5);
   logSession(focusDuration, breakDuration);
+
+  // Show external power green on abort
+  showExternalPowerGreen();
+
   startBreak(breakDuration);
 }
 
@@ -61,7 +65,9 @@ function startBreak(duration) {
       startBtn.disabled = false;
       stopBtn.disabled = true;
       timerEl.textContent = "00:00:00";
-      setPowerState("both");
+
+      // After break ends: external power box visible but red
+      showExternalPowerRed();
     } else {
       timerEl.textContent = formatTime(remaining - elapsed);
     }
@@ -78,6 +84,8 @@ function resetTimer() {
   startBtn.disabled = false;
   stopBtn.disabled = true;
   setPowerState("both");
+  // Reset external power to default green after reset
+  showExternalPowerGreen();
 }
 
 function logSession(focusMs, breakMs) {
@@ -100,10 +108,24 @@ function resetStreak() {
   updateStreakDisplay();
 }
 
+function showExternalPowerGreen() {
+  externalPowerEl.style.display = "block";
+  externalPowerEl.style.color = "#00ff00";  // bright green text
+  externalPowerEl.style.borderColor = "#00ff00";
+  externalPowerEl.style.boxShadow = "0 0 15px #00ff0044";
+}
+
+function showExternalPowerRed() {
+  externalPowerEl.style.display = "block";
+  externalPowerEl.style.color = "#ff0000";  // red text
+  externalPowerEl.style.borderColor = "#ff0000";
+  externalPowerEl.style.boxShadow = "0 0 15px #ff000044";
+}
+
 function setPowerState(state) {
   if (state === "both") {
     internalPowerEl.classList.remove("blink");
-    externalPowerEl.style.display = "block";
+    showExternalPowerGreen();
   } else if (state === "internal-only") {
     internalPowerEl.classList.add("blink");
     externalPowerEl.style.display = "none";
@@ -117,4 +139,3 @@ resetStreakBtn.addEventListener("click", resetStreak);
 
 updateStreakDisplay();
 setPowerState("both");
-
