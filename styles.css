@@ -29,8 +29,9 @@ body {
 .timer {
   font-family: 'Share Tech Mono', monospace;
   font-size: 6rem;
-  color: #f4d942; /* orangey-yellow */
+  color: #f4d942;
   text-shadow: 0 0 10px #f4d94288;
+  text-align: center;
 }
 
 .status-container,
