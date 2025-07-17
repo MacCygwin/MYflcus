@@ -1,43 +1,120 @@
-let time = 300;
-let countdown;
-let isRunning = false;
-const timerDisplay = document.getElementById("timer");
-const internalPower = document.getElementById("internal-power");
-const externalPower = document.getElementById("external-power");
+let startTime, timerInterval, isBreak = false, focusDuration = 0;
+let streak = parseInt(localStorage.getItem("streak")) || 0;
 
-const audio = new Audio("start-sound.mp3"); // Optional sound on start
+const timerEl = document.getElementById("timer");
+const startBtn = document.getElementById("start");
+const stopBtn = document.getElementById("stop");
+const resetBtn = document.getElementById("reset");
+const resetStreakBtn = document.getElementById("reset-streak");
+const logEl = document.getElementById("log");
+const streakEl = document.getElementById("streak");
+const internalPowerEl = document.getElementById("internal-power");
+const externalPowerEl = document.getElementById("external-power");
+const warningBox = document.getElementById("warning-box");
+const intbatsound = document.getElementById("internalbat-sound");
 
-function updateDisplay() {
-  const minutes = Math.floor(time / 60)
-    .toString()
-    .padStart(2, "0");
-  const seconds = (time % 60).toString().padStart(2, "0");
-  timerDisplay.textContent = `${minutes}:${seconds}`;
+function formatTime(ms) {
+  const totalSec = Math.floor(ms / 1000);
+  const hrs = String(Math.floor(totalSec / 3600)).padStart(2, '0');
+  const min = String(Math.floor((totalSec % 3600) / 60)).padStart(2, '0');
+  const sec = String(totalSec % 60).padStart(2, '0');
+  return `${hrs}:${min}:${sec}`;
+}
+
+function updateTimer() {
+  const elapsed = Date.now() - startTime;
+  timerEl.textContent = formatTime(elapsed);
 }
 
 function startTimer() {
-  if (isRunning) return;
-  isRunning = true;
-  externalPower.classList.add("hidden");
-  audio.play();
-  countdown = setInterval(() => {
-    if (time > 0) {
-      time--;
-      updateDisplay();
+  isBreak = false;
+  startTime = Date.now();
+  timerInterval = setInterval(updateTimer, 500);
+  startBtn.disabled = true;
+  stopBtn.disabled = false;
+  setPowerState("internal-only");
+  intbatsound.play();
+  warningBox.classList.remove("hidden");
+  setTimeout(() => warningBox.classList.add("hidden"), 3000);
+}
+
+function stopTimer() {
+  clearInterval(timerInterval);
+  const elapsed = Date.now() - startTime;
+  focusDuration = elapsed;
+  const breakDuration = Math.floor(focusDuration / 5);
+  logSession(focusDuration, breakDuration);
+  startBreak(breakDuration);
+}
+
+function startBreak(duration) {
+  isBreak = true;
+  let remaining = duration;
+  startTime = Date.now();
+  timerInterval = setInterval(() => {
+    const elapsed = Date.now() - startTime;
+    if (elapsed >= remaining) {
+      clearInterval(timerInterval);
+      streak++;
+      localStorage.setItem("streak", streak);
+      updateStreakDisplay();
+      startBtn.disabled = false;
+      stopBtn.disabled = true;
+      timerEl.textContent = "00:00:00";
+      setPowerState("both");
     } else {
-      clearInterval(countdown);
-      internalPower.textContent = "POWER LOST";
+      timerEl.textContent = formatTime(remaining - elapsed);
     }
-  }, 1000);
+  }, 500);
+
+  startBtn.disabled = true;
+  stopBtn.disabled = true;
+  setPowerState("internal-only");
 }
 
 function resetTimer() {
-  clearInterval(countdown);
-  isRunning = false;
-  time = 300;
-  internalPower.textContent = "INTERNAL POWER";
-  externalPower.classList.remove("hidden");
-  updateDisplay();
+  clearInterval(timerInterval);
+  timerEl.textContent = "00:00:00";
+  startBtn.disabled = false;
+  stopBtn.disabled = true;
+  setPowerState("both");
 }
 
-updateDisplay();
+function logSession(focusMs, breakMs) {
+  const log = `• Session: ${formatTime(focusMs)} → Break: ${formatTime(breakMs)}`;
+  const prev = logEl.innerHTML;
+  logEl.innerHTML = `${log}\n${prev}`;
+}
+
+function updateStreakDisplay() {
+  let icons = '';
+  for (let i = 0; i < 5; i++) {
+    icons += i < streak % 5 ? '🟢' : '⚪';
+  }
+  streakEl.textContent = `Streak: ${streak} ${icons}`;
+}
+
+function resetStreak() {
+  streak = 0;
+  localStorage.removeItem("streak");
+  updateStreakDisplay();
+}
+
+function setPowerState(state) {
+  if (state === "both") {
+    internalPowerEl.classList.remove("blink");
+    externalPowerEl.style.display = "block";
+  } else if (state === "internal-only") {
+    internalPowerEl.classList.add("blink");
+    externalPowerEl.style.display = "none";
+  }
+}
+
+startBtn.addEventListener("click", startTimer);
+stopBtn.addEventListener("click", stopTimer);
+resetBtn.addEventListener("click", resetTimer);
+resetStreakBtn.addEventListener("click", resetStreak);
+
+updateStreakDisplay();
+setPowerState("both");
+
