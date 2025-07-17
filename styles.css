@@ -6,7 +6,7 @@ html, body {
   height: 100%;
   margin: 0;
   font-family: 'Share Tech Mono', monospace;
-  background: linear-gradient(to right, #330000, #333300, #003300);
+  background: linear-gradient(to right, #8B0000, #B8860B, #006400);
   display: flex;
   justify-content: center;
   align-items: center;
