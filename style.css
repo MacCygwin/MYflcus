@@ -43,14 +43,13 @@ html, body {
 }
 
 #timer {
-  font-family: 'Orbitron', monospace;
-  font-size: 6rem;
-  color: #ffb84d;
-  text-shadow: 0 0 20px #ffb84d, 0 0 40px #ffb84d;
-  user-select: none;
-  text-align: center;
-  flex: 1 1 auto;
+  background-color: #000000; /* solid black */
+  padding: 20px 40px;        /* space around the timer text */
+  border-radius: 12px;       /* soften the corners */
+  box-shadow: 0 0 15px #ff000033; /* subtle glow if you want */
+  display: inline-block;     /* shrink to fit content */
 }
+
 
 .power-status-container {
   display: flex;
