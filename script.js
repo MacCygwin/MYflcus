@@ -55,6 +55,11 @@ function startBreak(duration) {
   isBreak = true;
   let remaining = duration;
   startTime = Date.now();
+
+  // On break start, internal power blinking and external power green visible
+  internalPowerEl.classList.add("blink");
+  showExternalPowerGreen();
+
   timerInterval = setInterval(() => {
     const elapsed = Date.now() - startTime;
     if (elapsed >= remaining) {
@@ -66,7 +71,8 @@ function startBreak(duration) {
       stopBtn.disabled = true;
       timerEl.textContent = "00:00:00";
 
-      // After break ends: external power box visible but red
+      // After break ends: external power box stays visible but turns red
+      internalPowerEl.classList.remove("blink");
       showExternalPowerRed();
     } else {
       timerEl.textContent = formatTime(remaining - elapsed);
@@ -75,7 +81,6 @@ function startBreak(duration) {
 
   startBtn.disabled = true;
   stopBtn.disabled = true;
-  setPowerState("internal-only");
 }
 
 function resetTimer() {
@@ -84,7 +89,6 @@ function resetTimer() {
   startBtn.disabled = false;
   stopBtn.disabled = true;
   setPowerState("both");
-  // Reset external power to default green after reset
   showExternalPowerGreen();
 }
 
@@ -110,14 +114,14 @@ function resetStreak() {
 
 function showExternalPowerGreen() {
   externalPowerEl.style.display = "block";
-  externalPowerEl.style.color = "#00ff00";  // bright green text
+  externalPowerEl.style.color = "#00ff00";
   externalPowerEl.style.borderColor = "#00ff00";
   externalPowerEl.style.boxShadow = "0 0 15px #00ff0044";
 }
 
 function showExternalPowerRed() {
   externalPowerEl.style.display = "block";
-  externalPowerEl.style.color = "#ff0000";  // red text
+  externalPowerEl.style.color = "#ff0000";
   externalPowerEl.style.borderColor = "#ff0000";
   externalPowerEl.style.boxShadow = "0 0 15px #ff000044";
 }
