@@ -2,27 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Evangelion Timer</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css"/>
+  <script defer src="script.js"></script>
 </head>
 <body>
   <div class="container">
-    <div class="timer" id="timer">00:00</div>
-
+    <div class="timer" id="timer">05:00</div>
     <div class="status-container">
-      <div class="status-box" id="external-power">External Power</div>
-      <div class="status-box" id="internal-power">Internal Power</div>
+      <div class="status-box" id="internal-power">INTERNAL POWER</div>
+      <div class="status-box" id="external-power">EXTERNAL POWER</div>
     </div>
-
     <div class="actions-container">
-      <div class="action-button" onclick="startTimer()">Start</div>
-      <div class="action-button" onclick="stopTimer()">Stop</div>
-      <div class="action-button" onclick="resetTimer()">Reset</div>
+      <div class="action-button" onclick="startTimer()">START</div>
+      <div class="action-button" onclick="resetTimer()">RESET</div>
     </div>
   </div>
-
-  <audio id="start-sound" src="start.mp3"></audio>
-  <script src="script.js"></script>
 </body>
 </html>
