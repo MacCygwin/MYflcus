@@ -7,10 +7,21 @@ html, body {
   margin: 0;
   font-family: 'Share Tech Mono', monospace;
   background: linear-gradient(to right, #330000, #664400, #003300);
+  background-size: 300% 100%;
+  animation: gradientMove 60s linear infinite;
   display: flex;
   justify-content: center;
   align-items: center;
   color: #ff2a2a;
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 100% 0%;
+  }
 }
 
 .panel {
