@@ -43,13 +43,17 @@ html, body {
 }
 
 #timer {
-  background-color: #000000; /* solid black */
-  padding: 20px 40px;        /* space around the timer text */
-  border-radius: 12px;       /* soften the corners */
-  box-shadow: 0 0 15px #ff000033; /* subtle glow if you want */
-  display: inline-block;     /* shrink to fit content */
+  background-color: #000000;    /* solid black background */
+  padding: 30px 60px;           /* more padding for bigger box */
+  border-radius: 12px;          /* rounded corners */
+  box-shadow: 0 0 20px #ffcc0099; /* subtle yellow glow */
+  font-size: 5rem;              /* bigger font */
+  color: #ffcc00;               /* orangey yellow */
+  font-family: 'Share Tech Mono', monospace; /* keep your monospace */
+  user-select: none;
+  display: inline-block;        /* shrink to fit content */
+  text-align: center;
 }
-
 
 .power-status-container {
   display: flex;
