@@ -1,42 +1,43 @@
-let timerInterval;
-let seconds = 0;
+let time = 300;
+let countdown;
+let isRunning = false;
 const timerDisplay = document.getElementById("timer");
-const externalPower = document.getElementById("external-power");
 const internalPower = document.getElementById("internal-power");
-const startSound = document.getElementById("start-sound");
+const externalPower = document.getElementById("external-power");
 
-function formatTime(secs) {
-  const minutes = Math.floor(secs / 60);
-  const seconds = secs % 60;
-  return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
-}
+const audio = new Audio("start-sound.mp3"); // Optional sound on start
 
-function updateTimerDisplay() {
-  timerDisplay.textContent = formatTime(seconds);
+function updateDisplay() {
+  const minutes = Math.floor(time / 60)
+    .toString()
+    .padStart(2, "0");
+  const seconds = (time % 60).toString().padStart(2, "0");
+  timerDisplay.textContent = `${minutes}:${seconds}`;
 }
 
 function startTimer() {
-  if (!timerInterval) {
-    startSound.play();
-    externalPower.classList.add("hidden");
-    internalPower.classList.remove("hidden");
-
-    timerInterval = setInterval(() => {
-      seconds++;
-      updateTimerDisplay();
-    }, 1000);
-  }
-}
-
-function stopTimer() {
-  clearInterval(timerInterval);
-  timerInterval = null;
+  if (isRunning) return;
+  isRunning = true;
+  externalPower.classList.add("hidden");
+  audio.play();
+  countdown = setInterval(() => {
+    if (time > 0) {
+      time--;
+      updateDisplay();
+    } else {
+      clearInterval(countdown);
+      internalPower.textContent = "POWER LOST";
+    }
+  }, 1000);
 }
 
 function resetTimer() {
-  stopTimer();
-  seconds = 0;
-  updateTimerDisplay();
+  clearInterval(countdown);
+  isRunning = false;
+  time = 300;
+  internalPower.textContent = "INTERNAL POWER";
   externalPower.classList.remove("hidden");
-  internalPower.classList.add("hidden");
+  updateDisplay();
 }
+
+updateDisplay();
