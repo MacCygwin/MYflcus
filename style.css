@@ -27,11 +27,10 @@ html, body {
 .panel {
   max-width: 100vw;
   width: 100vw;
-  padding-left: 40px;   /* keep your horizontal padding */
-  padding-right: 40px;  /* keep your horizontal padding */
+  padding-left: 40px;
+  padding-right: 40px;
   box-sizing: border-box;
 }
-
 
 .container {
   display: flex;
@@ -42,19 +41,30 @@ html, body {
   width: 100%;
 }
 
-#timer {
-  background-color: #000000;      /* solid black background */
-  padding: 30px 60px;             /* more padding for bigger box */
-  border-radius: 12px;            /* rounded corners */
-  box-shadow: 0 0 20px #ff000099; /* red glow around the box */
-  font-size: 5rem;                /* bigger font */
-  color: #ffcc00;                 /* orangey yellow font color */
-  font-family: 'Share Tech Mono', monospace;
+/* Wrapper with black bg and red glow for timer and power status */
+.timer-power-box {
+  background-color: #000000;
+  padding: 30px 50px;
+  border-radius: 12px;
+  box-shadow: 0 0 25px #ff0000cc;
+  display: flex;
+  align-items: center;
+  gap: 50px;
   user-select: none;
-  display: inline-block;
-  text-align: center;
 }
 
+/* Timer styling - remove previous black box and glow */
+#timer {
+  background: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  font-size: 5rem;
+  color: #ffcc00;  /* orangey yellow */
+  text-align: center;
+  font-family: 'Share Tech Mono', monospace;
+  user-select: none;
+  flex-shrink: 0;
+}
 
 .power-status-container {
   display: flex;
@@ -167,4 +177,3 @@ html, body {
   0% { opacity: 1; }
   100% { opacity: 0.6; }
 }
-
