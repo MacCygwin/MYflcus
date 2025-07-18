@@ -106,21 +106,21 @@ function setPowerState(state) {
   if (state === "both") {
     internalPowerEl.classList.remove("blink");
     internalPowerEl.style.color = "#ff0000"; // red text internal power
-    externalPowerEl.style.display = "block";
+    externalPowerEl.style.visibility = "visible";
     externalPowerEl.style.color = "#00ff00"; // green text external power
   } else if (state === "internal-only") {
     internalPowerEl.classList.add("blink");
     internalPowerEl.style.color = "#ff0000";
-    externalPowerEl.style.display = "none";
+    externalPowerEl.style.visibility = "hidden";
   } else if (state === "external-red") {
     internalPowerEl.classList.remove("blink");
     internalPowerEl.style.color = "#ff0000";
-    externalPowerEl.style.display = "block";
+    externalPowerEl.style.visibility = "visible";
     externalPowerEl.style.color = "#ff0000"; // red text external power
   } else if (state === "external-green") {
     internalPowerEl.classList.remove("blink");
     internalPowerEl.style.color = "#ff0000";
-    externalPowerEl.style.display = "block";
+    externalPowerEl.style.visibility = "visible";
     externalPowerEl.style.color = "#00ff00"; // green text external power
   }
 }
