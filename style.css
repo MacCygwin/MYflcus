@@ -15,7 +15,7 @@ html, body {
   font-family: 'Share Tech Mono', monospace;
   background: linear-gradient(to right, #330000, #664400, #003300);
   background-size: 300% 100%;
-  animation: gradientMove 60s linear infinite;
+  animation: gradientMove 60s ease-in-out infinite alternate;
   display: flex;
   justify-content: center;
   align-items: center;
