@@ -40,7 +40,6 @@ html, body {
 }
 
 .container {
-  position: relative;
   display: flex;
   align-items: center;
   gap: 30px;
@@ -64,7 +63,6 @@ html, body {
   letter-spacing: 1px;
   user-select: none;
 }
-
 
 .timer-power-box {
   background-color: #000000;
