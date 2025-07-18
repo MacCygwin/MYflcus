@@ -39,25 +39,32 @@ html, body {
   box-sizing: border-box;
 }
 
+.container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: nowrap;
+  justify-content: space-between;  /* Change from center */
+  width: 100%;
+  padding: 40px 40px 30px 40px; /* add top & left padding for label */
+  background-color: #000;        /* keep black background */
+  border: 2px solid #ff0000;
+  box-shadow: 0 0 20px #ff0000;
+  border-radius: 12px;
+}
+
 .timer-label {
   position: absolute;
   top: 10px;
   left: 15px;
   font-size: 1rem;
-  color: #ffaa00; /* or use #ffff00 for bright yellow */
+  color: #ffaa00;
   font-family: 'Share Tech Mono', monospace;
   letter-spacing: 1px;
+  user-select: none;
 }
 
-.container {
-  position : relative;
-  display: flex;
-  align-items: center;
-  gap: 30px;
-  flex-wrap: nowrap;
-  justify-content: center;
-  width: 100%;
-}
 
 .timer-power-box {
   background-color: #000000;
