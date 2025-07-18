@@ -39,7 +39,18 @@ html, body {
   box-sizing: border-box;
 }
 
+.timer-label {
+  position: absolute;
+  top: 10px;
+  left: 15px;
+  font-size: 1rem;
+  color: #ffaa00; /* or use #ffff00 for bright yellow */
+  font-family: 'Share Tech Mono', monospace;
+  letter-spacing: 1px;
+}
+
 .container {
+  position : relative;
   display: flex;
   align-items: center;
   gap: 30px;
