@@ -53,6 +53,7 @@ html, body {
   border-radius: 12px;
 }
 
+/*
 .timer-label {
   position: absolute;
   top: 10px;
@@ -63,6 +64,7 @@ html, body {
   letter-spacing: 1px;
   user-select: none;
 }
+*/
 
 .timer-power-box {
   background-color: #000000;
