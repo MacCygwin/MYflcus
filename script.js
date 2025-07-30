@@ -1,5 +1,6 @@
 let startTime, timerInterval, isBreak = false, focusDuration = 0;
 let streak = parseInt(localStorage.getItem("streak")) || 0;
+let isMuted = false;
 
 const timerEl = document.getElementById("timer");
 const startBtn = document.getElementById("start");
@@ -12,6 +13,7 @@ const internalPowerEl = document.getElementById("internal-power");
 const externalPowerEl = document.getElementById("external-power");
 const warningBox = document.getElementById("warning-box");
 const intbatsound = document.getElementById("internalbat-sound");
+const muteBtn = document.getElementById("mute-btn");
 
 function formatTime(ms) {
   const totalSec = Math.floor(ms / 1000);
@@ -124,6 +126,19 @@ function setPowerState(state) {
     externalPowerEl.style.color = "#00ff00"; // green text external power
   }
 }
+
+muteBtn.addEventListener("click", () => {
+    isMuted = !isMuted;
+    muteBtn.textContent = isMuted ? "🔇" : "🔊";
+});
+
+// Example: when you press "Start"
+document.getElementById("start-btn").addEventListener("click", () => {
+    if (!isMuted) {
+        startSound.play();
+    }
+    startTimer(); // your actual timer start function
+});
 
 // Initial setup on page load
 updateStreakDisplay();
