@@ -132,13 +132,23 @@ muteBtn.addEventListener("click", () => {
     muteBtn.textContent = isMuted ? "🔇" : "🔊";
 });
 
-// Example: when you press "Start"
-document.getElementById("start-btn").addEventListener("click", () => {
-    if (!isMuted) {
-        startSound.play();
-    }
-    startTimer(); // your actual timer start function
-});
+function startTimer() {
+  isBreak = false;
+  startTime = Date.now();
+  timerInterval = setInterval(updateTimer, 500);
+  startBtn.disabled = true;
+  stopBtn.disabled = false;
+  setPowerState("internal-only");
+
+  // Only play sound if not muted
+  if (!isMuted) {
+    intbatsound.play();
+  }
+
+  warningBox.classList.remove("hidden");
+  setTimeout(() => warningBox.classList.add("hidden"), 3000);
+}
+
 
 // Initial setup on page load
 updateStreakDisplay();
