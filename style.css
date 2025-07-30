@@ -54,8 +54,9 @@ html, body {
 }
 
 .mute-btn {
-  background: none;
-  border: none;
+  background: #2a0000;
+  border: 2px solid #ff0000;
+  box-shadow: 0 0 15px #ff000055;
   font-size: 1.5rem;
   cursor: pointer;
   margin-left: 10px;
