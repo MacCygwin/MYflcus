@@ -53,6 +53,14 @@ html, body {
   margin: 0 auto;
 }
 
+.mute-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
 .timer-power-box {
   display: flex;
   align-items: center;          /* vertically center timer & power */
