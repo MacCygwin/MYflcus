@@ -53,13 +53,13 @@ html, body {
   margin: 0 auto;
 }
 
-.mute-btn {
-  background: #2a0000;
-  border: 2px solid #ff0000;
-  box-shadow: 0 0 15px #ff000055;
+#mute-btn {
+  background: transparent;
+  border: none;
   font-size: 1.5rem;
   cursor: pointer;
   margin-left: 10px;
+  outline: none;
 }
 
 .timer-power-box {
