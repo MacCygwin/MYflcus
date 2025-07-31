@@ -93,7 +93,7 @@ function logSession(focusMs, breakMs) {
 function updateStreakDisplay() {
   let icons = '';
   for (let i = 0; i < 5; i++) {
-    icons += i < streak % 5 ? '🟢' : '⚪';
+    icons += i < streak % 5 ? '⭐' : '★';
   }
   streakEl.textContent = `Streak: ${streak} ${icons}`;
 }
